@@ -18,6 +18,8 @@ public class NetworkClientActor extends Actor
         GreenfootImage img = new GreenfootImage(1, 1);
         img.setTransparency(0);
         setImage(img);
+
+        
         
         try {
             s = new Socket("localhost", 4999);
@@ -33,17 +35,26 @@ public class NetworkClientActor extends Actor
     
     public void act()
     {   
+        
+        String serverAns = null;
+        
         if(Greenfoot.isKeyDown("space")){
-            System.out.println("we just pressed space on the client");
+
+            
+             System.out.println("we just pressed space on the client");
             
             sendToServer(s, "WE JUST PRESSED SPACE");
+            
+            try {
+                s.setSoTimeout(1000);
+                serverAns = receiveFromServer(s);
+                System.out.println("Server: "+ serverAns);
+            } catch (Exception e) {
+                System.err.println(e.fillInStackTrace());
+
+                reconnectToServer(s);
+            }
         }
-        
-        /*
-        if(receiveFromServer(s) != null){
-            System.out.println("Server: "+ receiveFromServer(s));    
-        }
-        */
     }
 
     public static void sendToServer(Socket s, String msg){
@@ -64,9 +75,12 @@ public class NetworkClientActor extends Actor
     public static String receiveFromServer(Socket s){
 
         try {
-            InputStreamReader in = new InputStreamReader(s.getInputStream());
-            BufferedReader bf = new BufferedReader(in);
+            System.out.println("trying to read from server");
 
+            InputStreamReader in = new InputStreamReader(s.getInputStream());
+            System.out.println("1");
+            BufferedReader bf = new BufferedReader(in);
+            System.out.println("2");
             return bf.readLine();
         }
         catch (IOException e){

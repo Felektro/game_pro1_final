@@ -8,6 +8,8 @@ public class server {
         Socket s = ss.accept();
         System.out.println("Connected successfully");
 
+        
+
         InputStreamReader in = new InputStreamReader(s.getInputStream());
         BufferedReader bf = new BufferedReader(in);
 
@@ -15,6 +17,9 @@ public class server {
             String msg = receiveFromClient(bf);  // waits for next message
             //if (msg != null) System.out.println("Received: " + msg);
             System.out.println("Received: " + msg);
+
+            sendToClient(s, "r"+msg);
+            System.out.println("r"+msg);
         }
     }
 
