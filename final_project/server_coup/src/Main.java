@@ -3,7 +3,7 @@ public class Main {
         // Start server in background thread
         new Thread(() -> {
             try {
-                server.main(null);
+                Server.main(null);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -2,6 +2,7 @@ import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * Write a description of class NetworkClientActor here.
@@ -11,31 +12,52 @@ import java.io.*;
  */
 public class NetworkClientActor extends Actor 
 {
-    Socket s;
+    private Socket socket;
+
+    private BufferedReader bufferedReader;
+    private BufferedWriter bufferedWriter;
+
+    private String username;
     
-        NetworkClientActor(){
+    public NetworkClientActor(Socket socket, String username){
         //make invisible
         GreenfootImage img = new GreenfootImage(1, 1);
         img.setTransparency(0);
         setImage(img);
+        
+        startClient();
 
-        
-        
         try {
-            s = new Socket("localhost", 4999);
-            System.out.println("Greenfoot connection successful");
+            this.socket = socket;
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.username = username;
         }
         catch (IOException e){
-            System.out.println("Greenfoot could not connect");
-            System.out.println(e);
-            s = null;
+            closeEverything(socket, bufferedReader, bufferedWriter);
         }
+    }
 
+    public void startClient (){
+        try    {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter your username for the group chat: ");
+            String username = scanner.nextLine();
+
+            Socket socket = new Socket("localhost", 4999);
+            NetworkClientActor client = new NetworkClientActor(socket, username);
+
+            client.listenForMessage();
+            client.sendMessage();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
     
     public void act()
     {   
-        
+        /*
         String serverAns = null;
         
         if(Greenfoot.isKeyDown("space")){
@@ -54,51 +76,62 @@ public class NetworkClientActor extends Actor
 
                 reconnectToServer(s);
             }
+        }*/
+    }
+
+    public void sendMessage(){
+        try {
+            bufferedWriter.write(username);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+
+            Scanner scanner = new Scanner(System.in);
+
+            while(socket.isConnected()){
+                String messageToSend = scanner.nextLine();
+                bufferedWriter.write(username+": " + messageToSend);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+        }
+        catch (IOException e){
+            closeEverything(socket, bufferedReader, bufferedWriter);
         }
     }
 
-    public static void sendToServer(Socket s, String msg){
+    public void listenForMessage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String msgFromGroupChat;
 
-        try {
-            System.out.println("Trying to send: "+ msg);
-
-            PrintWriter pr = new PrintWriter(s.getOutputStream());
-            pr.println(msg);
-            pr.flush();
-        }
-        catch (IOException e){
-            System.out.println("We got "+e+" exception");
-        }
-
+                while(socket.isConnected()){
+                    try {
+                        msgFromGroupChat = bufferedReader.readLine();
+                        System.out.println(msgFromGroupChat);
+                    }
+                    catch (IOException e){
+                        closeEverything(socket, bufferedReader, bufferedWriter);
+                    }
+                }
+            }
+        }).start();
     }
 
-    public static String receiveFromServer(Socket s){
-
-        try {
-            System.out.println("trying to read from server");
-
-            InputStreamReader in = new InputStreamReader(s.getInputStream());
-            System.out.println("1");
-            BufferedReader bf = new BufferedReader(in);
-            System.out.println("2");
-            return bf.readLine();
+    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter){
+        try{
+            if(bufferedReader != null){
+                bufferedWriter.close();
+            }
+            if(bufferedWriter != null){
+                bufferedWriter.close();
+            }
+            if(socket != null){
+                socket.close();
+            }
         }
         catch (IOException e){
-            System.out.println("We got "+e+" exception");
-            return null;
-        }
-
-    }
-    
-    public void reconnectToServer(Socket s){
-        try {
-            s = new Socket("localhost", 4999);
-            System.out.println("Greenfoot connection successful");
-        }
-        catch (IOException e){
-            System.out.println("Greenfoot could not connect");
-            System.out.println(e);
-            s = null;
+            e.printStackTrace();
         }
     }
 }
