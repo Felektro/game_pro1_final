@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 import java.util.Scanner;
 
-public class Client {
+class Client {
 
     private Socket socket;
 

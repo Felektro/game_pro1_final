@@ -23,6 +23,7 @@ public class ClientHandler implements Runnable{
             clientHandlers.add(this);
 
             broadcastMessage("SERVER: " + clientName + " has entered the game");
+            System.out.println("SERVER: " + clientName + " has entered the game");
 
         }
         catch (IOException e){
@@ -38,6 +39,7 @@ public class ClientHandler implements Runnable{
         while(socket.isConnected()){
             try {
                 messageFromClient = bufferedReader.readLine();
+                System.out.println(messageFromClient);
                 broadcastMessage(messageFromClient);
             }catch (IOException e){
                 closeEverything(socket, bufferedReader, bufferedWriter);
