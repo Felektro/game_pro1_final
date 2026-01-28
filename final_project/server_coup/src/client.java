@@ -1,42 +1,93 @@
 import java.net.*;
 import java.io.*;
+import java.util.Scanner;
 
-public class client {
-    public static void main(String[] args) throws IOException{
-        Socket s = new Socket("localhost", 4999);
+class Client {
 
-        sendToServer(s, "Is it still working");
+    private Socket socket;
 
-        System.out.println("Server: "+ receiveFromServer(s));
-    }
+    private BufferedReader bufferedReader;
+    private BufferedWriter bufferedWriter;
 
-    public static void sendToServer(Socket s, String msg){
+    private String username;
 
+    public Client(Socket socket, String username){
         try {
-
-            System.out.println("Trying to send: "+msg);
-            PrintWriter pr = new PrintWriter(s.getOutputStream());
-            pr.println(msg);
-            pr.flush();
+            this.socket = socket;
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.username = username;
         }
         catch (IOException e){
-            System.out.println("We got "+e+" exception");
+            closeEverything(socket, bufferedReader, bufferedWriter);
         }
-
     }
 
-    public static String receiveFromServer(Socket s){
-
+    public void sendMessage(){
         try {
-            InputStreamReader in = new InputStreamReader(s.getInputStream());
-            BufferedReader bf = new BufferedReader(in);
+            bufferedWriter.write(username);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
 
-            return bf.readLine();
+            Scanner scanner = new Scanner(System.in);
+
+            while(socket.isConnected()){
+                String messageToSend = scanner.nextLine();
+                bufferedWriter.write(username+": " + messageToSend);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
         }
         catch (IOException e){
-            System.out.println("We got "+e+" exception");
-            return null;
+            closeEverything(socket, bufferedReader, bufferedWriter);
         }
+    }
 
+    public void listenForMessage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String msgFromGroupChat;
+
+                while(socket.isConnected()){
+                    try {
+                        msgFromGroupChat = bufferedReader.readLine();
+                        System.out.println(msgFromGroupChat);
+                    }
+                    catch (IOException e){
+                        closeEverything(socket, bufferedReader, bufferedWriter);
+                    }
+                }
+            }
+        }).start();
+    }
+
+    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter){
+        try{
+            if(bufferedReader != null){
+                bufferedWriter.close();
+            }
+            if(bufferedWriter != null){
+                bufferedWriter.close();
+            }
+            if(socket != null){
+                socket.close();
+            }
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your username for the group chat: ");
+        String username = scanner.nextLine();
+
+        Socket socket = new Socket("localhost", 4999);
+        Client client = new Client(socket, username);
+
+        client.listenForMessage();
+        client.sendMessage();
     }
 }
