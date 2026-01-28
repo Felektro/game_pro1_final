@@ -5,4 +5,6 @@ comment1.params=world
 comment1.target=GameManager(greenfoot.World)
 comment2.params=
 comment2.target=void\ act()
-numComments=3
+comment3.params=amount
+comment3.target=void\ grabCoin(int)
+numComments=4
