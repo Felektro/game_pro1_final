@@ -24,5 +24,7 @@ public class MyWorld extends World
         addObject(helpMenu, getWidth()/2, getHeight()/2);
 
         addObject(new HelpButton(helpMenu),1550,50);
+        
+        addObject(new PokerTable(), getWidth()/2, getHeight()/2);
     }
 }
