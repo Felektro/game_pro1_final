@@ -17,32 +17,28 @@ public class GameManager extends Actor
 
     private String username;
     public NetworkClientActor network;
+    private boolean firstTime = true;
 
     public GameManager(World world){
         //make invisible
         GreenfootImage img = new GreenfootImage(1, 1);
         img.setTransparency(0);
         setImage(img);
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your username for the group chat: ");
-
-        //getClass().NetworkClientActor().username = scanner.nextLine();
-        
-        NetworkClientActor.startClient(scanner.nextLine());
-        
-        System.out.println(world.getObjects(NetworkClientActor.class));
-        
-        //network = (NetworkClientActor) world.getObjects(NetworkClientActor.class).get(0);
     }
 
     public void act()
     {
+        if(firstTime){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter your username for the group chat: ");
+            network = NetworkClientActor.startClient(scanner.nextLine());
+            firstTime = false;
+        }
+        
         String pressedKey = Greenfoot.getKey();
         
         if(pressedKey != null){
-            System.out.println(pressedKey + " just got pressed");
-            network.sendToServer(pressedKey);
+            network.sendMessage(pressedKey);
         }
     }
 }

@@ -18,8 +18,7 @@ public class NetworkClientActor extends Actor
     private BufferedWriter bufferedWriter;
 
     public String username;
-    private String serverMsg = "default_message";
-    boolean readyToSend = false;
+    private boolean nameSent = false;
     
     public NetworkClientActor(Socket s, String username){
     //make invisible
@@ -40,75 +39,46 @@ public class NetworkClientActor extends Actor
         }
     }
 
-    public static void startClient (String username){
+    public static NetworkClientActor startClient (String username){
         try    {
-            /*
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Enter your username for the group chat: ");
-            String username = scanner.nextLine();
-            */
-            
-           
-            System.out.println("1");
             Socket s = new Socket("localhost", 4999);
-            System.out.println("2");
             NetworkClientActor client = new NetworkClientActor(s, username);
-            System.out.println("3");
             
             client.listenForMessage();
-            //client.sendMessage();
+            
+            return client;
         }
         catch (IOException e){
             System.out.println("couldnt get the socket");
             e.printStackTrace();
+            return null;
         }
     }
     
     public void act()
     {   
-        /*
-        String serverAns = null;
         
-        if(Greenfoot.isKeyDown("space")){
-
-            
-             System.out.println("we just pressed space on the client");
-            
-            sendToServer(s, "WE JUST PRESSED SPACE");
-            
-            try {
-                s.setSoTimeout(1000);
-                serverAns = receiveFromServer(s);
-                System.out.println("Server: "+ serverAns);
-            } catch (Exception e) {
-                System.err.println(e.fillInStackTrace());
-
-                reconnectToServer(s);
-            }
-        }*/
-    }
-
-    public void sendToServer(String msg){
-        serverMsg = msg;
-        readyToSend = true;
     }
     
-    public void sendMessage(){
+    public void sendMessage(String msg){
+        if(!nameSent){
+            try {
+                bufferedWriter.write(username);
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+
+                nameSent = true;
+            }
+            catch (IOException e){
+                closeEverything(socket, bufferedReader, bufferedWriter);
+            }
+        }
+
         try {
-            bufferedWriter.write(username);
+            msg = username + ": " + msg;
+            bufferedWriter.write(msg);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-
-            while(socket.isConnected()){
-                //String messageToSend = scanner.nextLine();
-                //bufferedWriter.write(username+": " + messageToSend);
-                if(readyToSend){
-                    bufferedWriter.write(serverMsg);
-                    bufferedWriter.newLine();
-                    bufferedWriter.flush();
-                    readyToSend = false;
-                }
-            }
         }
         catch (IOException e){
             closeEverything(socket, bufferedReader, bufferedWriter);
