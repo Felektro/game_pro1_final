@@ -1,6 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 import java.util.Scanner;
+import java.util.*;
 
 /**
  * Write a description of class GameManager here.
@@ -14,20 +15,57 @@ public class GameManager extends Actor
      * Act - do whatever the GameManager wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-
+    
     public int money = 2;
 
     private String username;
     public NetworkClientActor network;
     private boolean firstTime = true;
+    
+    ArrayList<HeldCard.CardType> deckOfCards = new ArrayList<HeldCard.CardType>(); 
+    
+    Random rand = new Random();
 
-    public GameManager(World world){
+
+    public GameManager(){
         //make invisible
         GreenfootImage img = new GreenfootImage(1, 1);
         img.setTransparency(0);
         setImage(img);
+        
+        setDeck();
     }
 
+    public void setDeck(){
+        for (HeldCard.CardType card : HeldCard.CardType.values()) {
+            if(card != HeldCard.CardType.UNK){
+                deckOfCards.add(card);
+                deckOfCards.add(card);
+                deckOfCards.add(card);
+            }
+        }
+        
+        System.out.println(deckOfCards);
+
+    }
+    
+    public HeldCard.CardType pullACard(){
+        int selCard = rand.nextInt(deckOfCards.size());
+        HeldCard.CardType pickedCard;
+        
+        pickedCard = deckOfCards.get(selCard);
+        
+        System.out.println(selCard);
+        System.out.println(pickedCard);
+        System.out.println(deckOfCards);
+        
+        deckOfCards.remove(selCard);
+        
+        System.out.println(deckOfCards);
+        
+        return pickedCard;
+    }
+    
     public void act()
     {
         if(firstTime){
@@ -38,8 +76,6 @@ public class GameManager extends Actor
         }
         
         String pressedKey = Greenfoot.getKey();
-        
-        
         
         if(pressedKey != null){
             

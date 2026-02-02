@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=HeldCard
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ held_card\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=cardType
+comment1.target=HeldCard(HeldCard.CardType)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=cardToSet\ scale
+comment3.target=void\ setImage(HeldCard.CardType,\ float)
+numComments=4
