@@ -25,6 +25,13 @@ public class GameManager extends Actor
     ArrayList<HeldCard.CardType> deckOfCards = new ArrayList<HeldCard.CardType>(); 
     
     Random rand = new Random();
+    
+    public HeldCard.CardType hand1;
+    public HeldCard.CardType hand2;
+    
+    public HeldCard card1;
+    public HeldCard card2;
+    
 
 
     public GameManager(){
@@ -34,6 +41,10 @@ public class GameManager extends Actor
         setImage(img);
         
         setDeck();
+        
+        card1 = MyWorld.card1;
+        card2 = MyWorld.card2;
+        
     }
 
     public void setDeck(){
@@ -55,15 +66,19 @@ public class GameManager extends Actor
         
         pickedCard = deckOfCards.get(selCard);
         
-        System.out.println(selCard);
-        System.out.println(pickedCard);
-        System.out.println(deckOfCards);
-        
         deckOfCards.remove(selCard);
         
-        System.out.println(deckOfCards);
-        
         return pickedCard;
+    }
+    
+    public void assignCard(boolean firstCard, HeldCard.CardType newCard){
+        if(firstCard){
+            hand1 = newCard;
+            card1.setImage(hand1);
+        }else{
+            hand2 = newCard;
+            card2.setImage(hand2);
+        }
     }
     
     public void act()
@@ -73,9 +88,12 @@ public class GameManager extends Actor
             System.out.println("Enter your username for the group chat: ");
             network = NetworkClientActor.startClient(scanner.nextLine());
             firstTime = false;
+            
+            assignCard(true, pullACard());
+            assignCard(false, pullACard());
         }
         
-        String pressedKey = Greenfoot.getKey();
+        /*String pressedKey = Greenfoot.getKey();
         
         if(pressedKey != null){
             
@@ -95,6 +113,9 @@ public class GameManager extends Actor
                 grabCoin(3);
             }
         }
+        */
+       
+        
     }
 
     public void grabCoin(int amount){

@@ -29,6 +29,8 @@ public class HelpButton extends Actor
     {
         if (Greenfoot.mouseClicked(this))
         {
+            System.out.println("pressed help button");
+            
             helpMenu.showHelpMenu();
         }
     }

@@ -7,18 +7,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @version (a version number or a date)
  */
 public class HeldCard extends Actor
-{
-    /**
-     * Act - do whatever the held_card wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+{   
+    private float scale = 0.25f;
     
     public enum CardType {
         AMB, ASS, CAP, CON, DUK, UNK
     }
 
     public HeldCard(CardType cardType){
-        setImage(cardType, 0.25f);
+        setImage(cardType);
     }
 
     public void act()
@@ -26,13 +23,13 @@ public class HeldCard extends Actor
         // Add your action code here.
     }
     
-    public void setImage(CardType cardToSet, float scale){
+    public void setImage(CardType cardToSet){
         
         GreenfootImage img;
         
         switch(cardToSet) {
             case AMB:
-                System.out.println("Seting to " + cardToSet);
+                
                 
                 img = new GreenfootImage("coup_ambassador.png");
                 img.scale((int)(img.getWidth()*scale), (int)(img.getHeight()*scale));
@@ -40,7 +37,7 @@ public class HeldCard extends Actor
                 
                 break;
             case ASS:
-                System.out.println("Seting to " + cardToSet);
+                
                 
                 img = new GreenfootImage("coup_assassin.png");
                 img.scale((int)(img.getWidth()*scale), (int)(img.getHeight()*scale));
@@ -48,7 +45,7 @@ public class HeldCard extends Actor
                 
                 break;
             case CAP:
-                System.out.println("Seting to " + cardToSet);
+                
                 
                 img = new GreenfootImage("coup_captain.png");
                 img.scale((int)(img.getWidth()*scale), (int)(img.getHeight()*scale));
@@ -56,7 +53,7 @@ public class HeldCard extends Actor
                 
                 break;
             case CON:
-                System.out.println("Seting to " + cardToSet);
+                
                 
                 img = new GreenfootImage("coup_contessa.png");
                 img.scale((int)(img.getWidth()*scale), (int)(img.getHeight()*scale));
@@ -64,7 +61,7 @@ public class HeldCard extends Actor
                 
                 break;
             case DUK:
-                System.out.println("Seting to " + cardToSet);
+                
                 
                 img = new GreenfootImage("coup_duke.png");
                 img.scale((int)(img.getWidth()*scale), (int)(img.getHeight()*scale));
@@ -72,7 +69,7 @@ public class HeldCard extends Actor
                 
                 break;
             case UNK:
-                System.out.println("Seting to " + cardToSet);
+                
                 
                 img = new GreenfootImage("coup_back.png");
                 img.scale((int)(img.getWidth()*scale), (int)(img.getHeight()*scale));
