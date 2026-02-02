@@ -55,29 +55,35 @@ public class OptionMenu extends Actor
         
         for(int i = 0; i<num; i++){
             buttonImg = new GreenfootImage(len, wid);
-        
-        buttonImg.setColor(Color.DARK_GRAY);
-        buttonImg.fillRect(0, 0, len, wid);
-        
-        buttonImg.setColor(Color.BLACK);
-        
-        for(int j = 0; j<5; j++){
-            buttonImg.drawRect(j, j, len-j*2, wid-j*2);
+            
+            buttonImg.setColor(Color.GREEN);
+            buttonImg.fillRect(0, 0, len, wid);
+            
+            buttonImg.setColor(Color.BLACK);
+            
+            for(int j = 0; j<5; j++){
+                buttonImg.drawRect(j, j, len-j*2, wid-j*2);
+            }
+            
+            buttonImg.setTransparency(255);
+            
+            Button button = new Button(buttonImg); 
+            list[i] = button;
+            getWorld().addObject(button, 0, 0);
         }
         
-        buttonImg.setTransparency(255);
-        
-        Button button = new Button(buttonImg);            
-        }
-        
+        System.out.println(getX() + "  " + getY());
         
         
         
     }
-    
+    boolean firsttime = true;
     public void act()
     {
-        // Add your action code here.
+        if(firsttime){
+             addButtons(3);
+             firsttime = false;
+         }
     }
     
     public void showHelpMenu(){

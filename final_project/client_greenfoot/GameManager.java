@@ -56,7 +56,7 @@ public class GameManager extends Actor
             }
         }
         
-        System.out.println(deckOfCards);
+        //System.out.println(deckOfCards);
 
     }
     
