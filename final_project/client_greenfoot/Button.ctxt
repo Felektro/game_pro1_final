@@ -1,10 +1,12 @@
 #BlueJ class context
 comment0.target=Button
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Button\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
-comment1.params=img
-comment1.target=Button(greenfoot.GreenfootImage)
+comment1.params=img\ parent
+comment1.target=Button(greenfoot.GreenfootImage,\ OptionMenu)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=act
 comment3.target=void\ OnClick(Button.ButtonAction)
-numComments=4
+comment4.params=textImg
+comment4.target=void\ setText(greenfoot.GreenfootImage)
+numComments=5

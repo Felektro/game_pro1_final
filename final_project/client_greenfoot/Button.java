@@ -13,9 +13,12 @@ public class Button extends Actor
     }
     
     public ButtonAction action;
+    public GreenfootImage ogImg;
+    private OptionMenu parentMenu;
     
-    public Button(GreenfootImage img){
+    public Button(GreenfootImage img, OptionMenu parent){
         setImage(img);
+        parentMenu = parent;
     }
     public void act()
     {
@@ -29,6 +32,7 @@ public class Button extends Actor
         switch (act) {
             case close:
                 System.out.println("closed");
+                parentMenu.closeMenu();
                 break;
             
             case gg1:
@@ -46,6 +50,12 @@ public class Button extends Actor
             default:
                 System.out.println("No such action");
                 break;
+        }
+    }
+    
+    public void setText(GreenfootImage textImg){
+        if(textImg != null){
+            getImage().drawImage(textImg, getImage().getWidth()/2 - textImg.getWidth()/2, getImage().getHeight()/2 - textImg.getHeight()/2);
         }
     }
 }
