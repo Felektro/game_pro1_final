@@ -16,7 +16,7 @@ public class MyWorld extends World
     {    
         super(1600, 900, 1); 
         
-        setPaintOrder(OptionMenu.class, HelpButton.class,HelpMenu.class, CoinPile.class);
+        setPaintOrder(Button.class, OptionMenu.class, HelpButton.class,HelpMenu.class, CoinPile.class);
 
         addObject(new GameManager(), 0, 0);
 

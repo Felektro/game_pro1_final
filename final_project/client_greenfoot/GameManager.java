@@ -92,30 +92,6 @@ public class GameManager extends Actor
             assignCard(true, pullACard());
             assignCard(false, pullACard());
         }
-        
-        /*String pressedKey = Greenfoot.getKey();
-        
-        if(pressedKey != null){
-            
-            System.out.println(pressedKey);
-            
-            if(network != null){
-                network.sendMessage(pressedKey);    
-            }
-            
-            if(pressedKey == "1"){
-                grabCoin(1);
-            }
-            if(pressedKey == "2"){
-                grabCoin(2);
-            }
-            if(pressedKey == "3"){
-                grabCoin(3);
-            }
-        }
-        */
-       
-        
     }
 
     public void grabCoin(int amount){
