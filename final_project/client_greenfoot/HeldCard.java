@@ -9,6 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class HeldCard extends Actor
 {   
     private float scale = 0.25f;
+    private boolean isEnlarged = false;
     
     public enum CardType {
         AMB, ASS, CAP, CON, DUK, UNK
@@ -20,9 +21,29 @@ public class HeldCard extends Actor
 
     public void act()
     {
-        // Add your action code here.
+        if (Greenfoot.mouseClicked(this))
+        {
+            OnClick();
+            System.out.println("clicked card");
+        }
     }
-    
+    public void OnClick(){
+        GreenfootImage img = getImage(); 
+        
+        int width = getImage().getWidth();
+        int height = getImage().getHeight(); 
+        
+        if(isEnlarged){
+            img.scale(37, 56);
+            setImage(img);
+        } else{
+            img.scale(300, 450);
+            setImage(img);
+        }
+        
+        isEnlarged = !isEnlarged;
+        
+    }
     public void setImage(CardType cardToSet){
         
         GreenfootImage img;

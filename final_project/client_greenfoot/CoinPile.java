@@ -9,8 +9,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class CoinPile extends Actor
 {
     private GreenfootImage image;
+    private OptionMenu optionMenu;
     
-    public CoinPile(){
+    public CoinPile(OptionMenu optionMenu){
+        this.optionMenu = optionMenu;
+        
         setImage("coins.png");
         image = getImage();
         image.scale((int)(image.getWidth()*0.3), (int)(image.getHeight()*0.3));
@@ -24,8 +27,7 @@ public class CoinPile extends Actor
         {
             System.out.println("pressed coins button");
             
-            
-            
+            optionMenu.grabMoneySetup();
         }
     }
 }

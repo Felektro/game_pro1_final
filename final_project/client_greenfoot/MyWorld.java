@@ -16,7 +16,7 @@ public class MyWorld extends World
     {    
         super(1600, 900, 1); 
         
-        setPaintOrder(Button.class, OptionMenu.class, HelpButton.class,HelpMenu.class, CoinPile.class);
+        setPaintOrder( Button.class,CoinPile.class, OptionMenu.class, HeldCard.class, HelpButton.class,HelpMenu.class);
 
         addObject(new GameManager(), 0, 0);
 
@@ -25,11 +25,13 @@ public class MyWorld extends World
 
         addObject(new HelpButton(helpMenu),1550,50);
         
-        addObject(new OptionMenu(), getWidth()/2, getHeight()/2);
+        OptionMenu optionMenu = new OptionMenu();
+        
+        addObject(optionMenu, getWidth()/2, getHeight()/2);
         
         addObject(new PokerTable(), getWidth()/2, getHeight()/2);
         
-        addObject(new CoinPile(), getWidth()/2, getHeight()/2);
+        addObject(new CoinPile(optionMenu), getWidth()/2, getHeight()/2);
 
         addObject(card1, 850, 800);
         addObject(card2, 1010, 800);

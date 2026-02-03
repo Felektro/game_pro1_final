@@ -130,43 +130,44 @@ public class OptionMenu extends Actor
         warningText.scale(70, 70);
         
         for (Button button : buttonList) {
-            
-            switch (button.action) {
-                case gg1:
-                    textImg = new GreenfootImage(gg1Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
-                    break;
-            
-                case gg2:
-                    textImg = new GreenfootImage(gg2Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
-                    break;
-            
-                case gg3:
-                    textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
-                    
-                    textImg.drawImage(warningText, textImg.getWidth()/2-warningText.getWidth()/2, textImg.getHeight()/4*3 - warningText.getWidth()/2);
-                    break;
-                    
-                case blCon:
-                    textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
-                    
-                    textImg.drawImage(warningText, textImg.getWidth()/2-warningText.getWidth()/2, textImg.getHeight()/4*3 - warningText.getWidth()/2);
-                    break;
-                    
-                case lInf:
-                    textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
-                    break;
+            if(button != null){
+                switch (button.action) {
+                    case gg1:
+                        textImg = new GreenfootImage(gg1Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                        break;
                 
-                case close:
-                    textImg = null;
-            
-                default:
-                    System.out.println("No such action");
-                    textImg = null;
-                    break;
-            }
+                    case gg2:
+                        textImg = new GreenfootImage(gg2Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                        break;
+                
+                    case gg3:
+                        textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                        
+                        textImg.drawImage(warningText, textImg.getWidth()/2-warningText.getWidth()/2, textImg.getHeight()/4*3 - warningText.getWidth()/2);
+                        break;
+                        
+                    case blCon:
+                        textImg = new GreenfootImage(blConText, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                        
+                        textImg.drawImage(warningText, textImg.getWidth()/2-warningText.getWidth()/2, textImg.getHeight()/4*3 - warningText.getWidth()/2);
+                        break;
+                        
+                    case lInf:
+                        textImg = new GreenfootImage(lInfText, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                        break;
+                    
+                    case close:
+                        textImg = null;
+                        break;
+                        
+                    default:
+                        System.out.println("No such action");
+                        textImg = null;
+                        break;
+                }
             
             button.setText(textImg);
-            
+            }
         }
         
     }
@@ -175,7 +176,7 @@ public class OptionMenu extends Actor
     public void act()
     {
         if(firsttime){
-             defendAssassinSetup();
+             //defendAssassinSetup();
              firsttime = false;
          }
     }
@@ -196,6 +197,6 @@ public class OptionMenu extends Actor
     private String gg1Text = "Take 1 coin \nfrom the treasury. \nCannot be blocked \nor challenged. \n";
     private String gg2Text = "Take 2 coins \nfrom the treasury. \nCan be blocked \nby a Duke. \n";
     private String gg3Text = "Duke Action:\n\nTake 3 coins \nfrom the treasury. \n\n\n ";
-    private String blCon = "Contessa Action:\n\nTake 3 coins \nfrom the treasury. \n\n\n ";
-    private String lInf = "loseInfluence";
+    private String blConText = "Contessa Action:\n\nTake 3 coins \nfrom the treasury. \n\n\n ";
+    private String lInfText = "loseInfluence";
 }
