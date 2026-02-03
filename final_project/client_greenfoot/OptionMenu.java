@@ -109,31 +109,54 @@ public class OptionMenu extends Actor
         addButtonText();
     }
     
+    public void defendAssassinSetup(){
+        
+        showOptionMenu();
+        
+        buttonList = addButtons(2);
+        
+        buttonList[0].action = Button.ButtonAction.close;
+        buttonList[1].action = Button.ButtonAction.blCon;
+        buttonList[2].action = Button.ButtonAction.lInf;
+        
+        addButtonText();
+    }
+    
     public void addButtonText(){
         
         GreenfootImage textImg;
+        
+        GreenfootImage warningText = new GreenfootImage("warning.png");
+        warningText.scale(70, 70);
         
         for (Button button : buttonList) {
             
             switch (button.action) {
                 case gg1:
-                    System.out.println("adding button 1");
                     textImg = new GreenfootImage(gg1Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
                     break;
             
                 case gg2:
-                    System.out.println("adding button 2");
                     textImg = new GreenfootImage(gg2Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
                     break;
             
                 case gg3:
-                    System.out.println("adding button 3");
                     textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
-                    getImage().drawImage(new GreenfootImage("warning.png"), getImage().getWidth()/2 - textImg.getWidth()/2, getImage().getHeight()/2 - textImg.getHeight()/2);
+                    
+                    textImg.drawImage(warningText, textImg.getWidth()/2-warningText.getWidth()/2, textImg.getHeight()/4*3 - warningText.getWidth()/2);
                     break;
                     
+                case blCon:
+                    textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                    
+                    textImg.drawImage(warningText, textImg.getWidth()/2-warningText.getWidth()/2, textImg.getHeight()/4*3 - warningText.getWidth()/2);
+                    break;
+                    
+                case lInf:
+                    textImg = new GreenfootImage(gg3Text, 30, Color.BLACK,new Color(0, 0, 0, 0),Color.RED);
+                    break;
+                
                 case close:
-                    System.out.println("no text to add to closed");
                     textImg = null;
             
                 default:
@@ -144,7 +167,6 @@ public class OptionMenu extends Actor
             
             button.setText(textImg);
             
-            
         }
         
     }
@@ -153,7 +175,7 @@ public class OptionMenu extends Actor
     public void act()
     {
         if(firsttime){
-             grabMoneySetup();
+             defendAssassinSetup();
              firsttime = false;
          }
     }
@@ -173,5 +195,7 @@ public class OptionMenu extends Actor
     
     private String gg1Text = "Take 1 coin \nfrom the treasury. \nCannot be blocked \nor challenged. \n";
     private String gg2Text = "Take 2 coins \nfrom the treasury. \nCan be blocked \nby a Duke. \n";
-    private String gg3Text = "Duke Action:\n\nTake 3 coins \nfrom the treasury. \n";
+    private String gg3Text = "Duke Action:\n\nTake 3 coins \nfrom the treasury. \n\n\n ";
+    private String blCon = "Contessa Action:\n\nTake 3 coins \nfrom the treasury. \n\n\n ";
+    private String lInf = "loseInfluence";
 }

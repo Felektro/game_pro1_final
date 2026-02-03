@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Button extends Actor
 {   
     public enum ButtonAction {
-        close, gg1, gg2, gg3
+        close, gg1, gg2, gg3, blCon, lInf
     }
     
     public ButtonAction action;
@@ -32,7 +32,6 @@ public class Button extends Actor
         switch (act) {
             case close:
                 System.out.println("closed");
-                parentMenu.closeMenu();
                 break;
             
             case gg1:
@@ -46,11 +45,21 @@ public class Button extends Actor
             case gg3:
                 System.out.println("grabbed 3 coin");
                 break;
+            
+            case blCon:
+                System.out.println("blocked assassin w contessa");
+                break;
+                
+            case lInf:
+                System.out.println("lost influence");
+                break;
         
             default:
                 System.out.println("No such action");
                 break;
         }
+        
+        parentMenu.closeMenu();
     }
     
     public void setText(GreenfootImage textImg){
