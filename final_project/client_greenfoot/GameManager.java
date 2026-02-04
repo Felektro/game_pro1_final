@@ -58,24 +58,24 @@ public class GameManager extends Actor
                 break;
             
             case 4:
-                customPlayerPos[0] = allPlayerPos[2];
-                customPlayerPos[1] = allPlayerPos[4];
-                customPlayerPos[2] = allPlayerPos[2];
+                customPlayerPos[0] = allPlayerPos[1];
+                customPlayerPos[1] = allPlayerPos[3];
+                customPlayerPos[2] = allPlayerPos[5];
                 break;
                 
             case 5:
-                customPlayerPos[0] = allPlayerPos[2];
-                customPlayerPos[1] = allPlayerPos[4];
-                customPlayerPos[2] = allPlayerPos[2];
-                customPlayerPos[3] = allPlayerPos[4];
+                customPlayerPos[0] = allPlayerPos[0];
+                customPlayerPos[1] = allPlayerPos[2];
+                customPlayerPos[2] = allPlayerPos[4];
+                customPlayerPos[3] = allPlayerPos[6];
                 break;
                 
             case 6:
-                customPlayerPos[0] = allPlayerPos[2];
-                customPlayerPos[1] = allPlayerPos[4];
-                customPlayerPos[2] = allPlayerPos[2];
+                customPlayerPos[0] = allPlayerPos[0];
+                customPlayerPos[1] = allPlayerPos[2];
+                customPlayerPos[2] = allPlayerPos[3];
                 customPlayerPos[3] = allPlayerPos[4];
-                customPlayerPos[4] = allPlayerPos[2];
+                customPlayerPos[4] = allPlayerPos[6];
                 break;
             
         }
@@ -134,7 +134,7 @@ public class GameManager extends Actor
             assignCard(true, pullACard());
             assignCard(false, pullACard());
             
-            setPlayers(3);
+            setPlayers(6);
         }
     }
 
