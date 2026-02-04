@@ -24,6 +24,8 @@ public class GameManager extends Actor
     
     ArrayList<HeldCard.CardType> deckOfCards = new ArrayList<HeldCard.CardType>(); 
     
+    int[][] allPlayerPos = {{300, 700}, {150, 450}, {300, 200}, {800, 100}, {1300, 200}, {1450, 450}, {1300, 700}};
+    
     Random rand = new Random();
     
     public HeldCard.CardType hand1;
@@ -32,8 +34,6 @@ public class GameManager extends Actor
     public HeldCard card1;
     public HeldCard card2;
     
-
-
     public GameManager(){
         //make invisible
         GreenfootImage img = new GreenfootImage(1, 1);
@@ -47,6 +47,48 @@ public class GameManager extends Actor
         
     }
 
+    public void setPlayers(int numPlayers){
+        
+        int [][] customPlayerPos = new int[numPlayers-1][1];
+        
+        switch(numPlayers){
+            case 3:
+                customPlayerPos[0] = allPlayerPos[2];
+                customPlayerPos[1] = allPlayerPos[4];
+                break;
+            
+            case 4:
+                customPlayerPos[0] = allPlayerPos[2];
+                customPlayerPos[1] = allPlayerPos[4];
+                customPlayerPos[2] = allPlayerPos[2];
+                break;
+                
+            case 5:
+                customPlayerPos[0] = allPlayerPos[2];
+                customPlayerPos[1] = allPlayerPos[4];
+                customPlayerPos[2] = allPlayerPos[2];
+                customPlayerPos[3] = allPlayerPos[4];
+                break;
+                
+            case 6:
+                customPlayerPos[0] = allPlayerPos[2];
+                customPlayerPos[1] = allPlayerPos[4];
+                customPlayerPos[2] = allPlayerPos[2];
+                customPlayerPos[3] = allPlayerPos[4];
+                customPlayerPos[4] = allPlayerPos[2];
+                break;
+            
+        }
+        
+        for(int i = 0; i < customPlayerPos.length; i++){
+            
+            EnemyPlayer player = new EnemyPlayer(customPlayerPos[i][0], customPlayerPos[i][1], getWorld(), i+1);
+            
+            
+            getWorld().addObject(player, customPlayerPos[i][0], customPlayerPos[i][1]);
+        }
+    }
+    
     public void setDeck(){
         for (HeldCard.CardType card : HeldCard.CardType.values()) {
             if(card != HeldCard.CardType.UNK){
@@ -91,6 +133,8 @@ public class GameManager extends Actor
             
             assignCard(true, pullACard());
             assignCard(false, pullACard());
+            
+            setPlayers(3);
         }
     }
 
