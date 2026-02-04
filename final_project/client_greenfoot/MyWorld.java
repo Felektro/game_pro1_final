@@ -16,14 +16,13 @@ public class MyWorld extends World
     {    
         super(1600, 900, 1); 
         
-        setPaintOrder( Button.class,CoinPile.class, OptionMenu.class, HeldCard.class, HelpButton.class,HelpMenu.class);
+        setPaintOrder(HelpMenu.class, Button.class, HeldCard.class, CoinPile.class, OptionMenu.class, HelpButton.class, HelpMenu.class);
 
         addObject(new GameManager(), 0, 0);
 
-        HelpMenu helpMenu = new HelpMenu();
-        addObject(helpMenu, getWidth()/2, getHeight()/2);
+        
 
-        addObject(new HelpButton(helpMenu),1550,50);
+        addObject(new HelpButton(),1550,50);
         
         OptionMenu optionMenu = new OptionMenu();
         

@@ -74,10 +74,10 @@ public class GameManager extends Actor
     public void assignCard(boolean firstCard, HeldCard.CardType newCard){
         if(firstCard){
             hand1 = newCard;
-            card1.setImage(hand1);
+            card1.setImage(hand1, 0.25f);
         }else{
             hand2 = newCard;
-            card2.setImage(hand2);
+            card2.setImage(hand2, 0.25f);
         }
     }
     

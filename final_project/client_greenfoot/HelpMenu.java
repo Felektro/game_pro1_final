@@ -12,34 +12,27 @@ public class HelpMenu extends Actor
      * Act - do whatever the helpMenu wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    
-    private boolean visible = false;
     private GreenfootImage image;
     
-    public HelpMenu(){
+    private HelpButton button;
+    
+    public HelpMenu(HelpButton button){
         setImage("Coup-Cheat-Sheet.jpg");
         image = getImage();
         image.scale((int)(image.getWidth()/2.5), (int)(image.getHeight()/2.5));
-        image.setTransparency(0);
+        image.setTransparency(255);
         
         setImage(image);
+        
+        this.button = button;
     }
     
     public void act()
     {
-        // Add your action code here.
-    }
-    
-    public void showHelpMenu(){
-        if(visible){
-            image.setTransparency(0);
-            visible = false;
+        if (Greenfoot.mouseClicked(this))
+        {
+            button.openMenu = false;
+            getWorld().removeObject(this);
         }
-        else{
-            image.setTransparency(255);
-            visible = true;
-        }
-        
-        setImage(image);
     }
 }

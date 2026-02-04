@@ -8,17 +8,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class HeldCard extends Actor
 {   
-    private float scale = 0.25f;
-    private boolean isEnlarged = false;
-    
     public enum CardType {
         AMB, ASS, CAP, CON, DUK, UNK
     }
+    
+    public CardType currentCard;
+    public boolean isUI = false;
 
-    public HeldCard(CardType cardType){
-        setImage(cardType);
+    public HeldCard(CardType cardType, float scale){
+        currentCard = cardType;
+        setImage(cardType, scale);
     }
-
+    
+    public HeldCard(CardType cardType){
+        currentCard = cardType;
+        setImage(cardType, 0.25f);
+    }
     public void act()
     {
         if (Greenfoot.mouseClicked(this))
@@ -28,23 +33,18 @@ public class HeldCard extends Actor
         }
     }
     public void OnClick(){
-        GreenfootImage img = getImage(); 
-        
-        int width = getImage().getWidth();
-        int height = getImage().getHeight(); 
-        
-        if(isEnlarged){
-            img.scale(37, 56);
-            setImage(img);
-        } else{
-            img.scale(300, 450);
-            setImage(img);
+        if(isUI){
+            getWorld().removeObject(this);
+        }else{
+            HeldCard uiCard = new HeldCard(currentCard, 1.1f);
+            
+            uiCard.isUI = true;
+            getWorld().addObject(uiCard, 1600/2, 900/2);
         }
-        
-        isEnlarged = !isEnlarged;
-        
     }
-    public void setImage(CardType cardToSet){
+    public void setImage(CardType cardToSet, float scale){
+        
+        currentCard = cardToSet;
         
         GreenfootImage img;
         
